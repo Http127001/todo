@@ -1,9 +1,8 @@
-import { ACTION_CONT } from "../constants/actions";
+import { ACTION_CONT } from '../constants/actions';
 
 let nextId = 0;
 const initialState = [];
 const todos = (state = initialState, action) => {
-  // console.log(state);
   switch (action.type) {
     case ACTION_CONT.ADD_TODO:
       return [
@@ -11,6 +10,7 @@ const todos = (state = initialState, action) => {
         {
           id: nextId++,
           title: action.title,
+          date: action.date,
           priority: action.priority,
           completed: false,
         },
@@ -25,6 +25,7 @@ const todos = (state = initialState, action) => {
           ? {
               id: action.id,
               title: action.title,
+              date: action.date,
               priority: action.priority,
               completed: todo.completed,
             }
@@ -32,9 +33,6 @@ const todos = (state = initialState, action) => {
       );
     case ACTION_CONT.DELETE_TODO:
       return state.filter((todo) => todo.id !== action.id);
-    case ACTION_CONT.SELECT_TODO:
-      return state[action.id];
-    // return state[action.id];
     default:
       return state;
   }
