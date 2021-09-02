@@ -18,22 +18,22 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 const TodoList = (props) => {
   const { todos, toggleTodo, addTodo, editTodo, deleteTodo } = props;
-
   const [cate, setCate] = useState('all');
   const [priority, setPriority] = useState('heigh');
   const [isModalVisible, toggleModal] = useState(false);
   const [showPicker, setPicker] = useState(false);
   const [title, settitle] = useState('');
   const [date, setDate] = useState('');
-  const [id, setId] = useState(null);
+  const [isEdit, setIsEdit] = useState(false);
+  const [id, setId] = useState('');
 
   function submit() {
     if (isModalVisible) {
-      if (id) {
+      if (isEdit) {
         editTodo(id, title, priority, date);
+        setIsEdit(false);
       } else {
         if (title && date) {
-          console.log(title, priority, date);
           addTodo(title, priority, date);
         }
       }
@@ -102,6 +102,7 @@ const TodoList = (props) => {
         </View>
         <TouchableOpacity
           onPress={() => {
+            setIsEdit(true);
             setId(idTodo);
             settitle(titleTodo);
             setDate(dateTodo);
@@ -356,7 +357,7 @@ const TodoList = (props) => {
               fontSize: 24,
             }}
           >
-            {TODOS_CONST.ADD_NEW_TASK}
+            {isEdit ? 'Update Task' : TODOS_CONST.ADD_NEW_TASK}
           </Text>
         </TouchableOpacity>
       </View>
